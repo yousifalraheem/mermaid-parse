@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/yousifalraheem/mermaid-parse/branch/main/graph/badge.svg)](https://codecov.io/gh/yousifalraheem/mermaid-parse)
 
 # mermaid-parse
-Parses Mermaid definitions into mermaid svg diagram
+Parses Mermaid definitions into mermaid svg diagram.
 
 ## Installation
 
