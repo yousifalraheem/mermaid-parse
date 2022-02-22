@@ -46,5 +46,12 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "release": {
+    "brances": [
+      "main",
+      { "name": "beta", "prerelease": true },
+      { "name": "alpha", "prerelease": true }
+    ]
   }
 }
