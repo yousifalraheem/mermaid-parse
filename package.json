@@ -7,7 +7,8 @@
     "commit": "git-cz",
     "prepare": "husky install",
     "release": "semantic-release",
-    "test": "jest --detectOpenHandles --forceExit --no-watch --coverage"
+    "test": "jest --detectOpenHandles --forceExit --no-watch --coverage",
+    "test:fast": "jest --detectOpenHandles --forceExit --no-watch --silent"
   },
   "repository": {
     "type": "git",
