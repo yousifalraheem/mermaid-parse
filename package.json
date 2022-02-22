@@ -1,7 +1,7 @@
 {
   "name": "mermaid-parse",
   "version": "0.1.0",
-  "description": "Parses Mermaid diagrams into strings",
+  "description": "Parses Mermaid definitions into mermaid svg diagram",
   "main": "index.js",
   "scripts": {
     "commit": "git-cz",
