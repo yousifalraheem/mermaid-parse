@@ -1,0 +1,30 @@
+{
+  "name": "mermaid-parse",
+  "version": "1.0.0",
+  "description": "Parses Mermaid diagrams into strings",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yousifalraheem/mermaid-parse.git"
+  },
+  "keywords": [
+    "mermaid",
+    "parser"
+  ],
+  "author": "Yousif Al-Raheem",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yousifalraheem/mermaid-parse/issues"
+  },
+  "homepage": "https://github.com/yousifalraheem/mermaid-parse#readme",
+  "dependencies": {
+    "mermaid": "^8.14.0",
+    "puppeteer": "^13.3.2"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
