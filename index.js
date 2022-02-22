@@ -4,6 +4,27 @@
 const path = require("path");
 const puppeteer = require("puppeteer");
 
+/**
+ * decode HTML entities
+ * @param {string} encodedString
+ * @returns {string} The decoded string
+ */
+function decodeHTMLEntities(encodedString) {
+  const translate_regex = /&(nbsp|amp|quot|lt|qt);/g;
+  const translate_map = {
+    nbsp: " ",
+    amp: "&",
+    quot: "\"",
+    lt: "<",
+    gt: ">",
+  };
+  return encodedString
+    .replace(translate_regex, (_, entity) => translate_map[entity])
+    .replace(/&#(\d+);/gi, (_, charCode) =>
+      String.fromCharCode(parseInt(charCode))
+    )
+}
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   let info;
   let value;
@@ -98,8 +119,24 @@ module.exports = function (definition) {
   return _asyncToGenerator(function* () {
     const browser = yield puppeteer.launch();
 
-    const output = yield parseMMD(browser, definition);
+    /**
+     * @type {string}
+     */
+    const output = yield parseMMD(browser, decodeHTMLEntities(definition));
     yield browser.close();
+
+    if (output.trim().startsWith("<div id=\"dmermaid-")) {
+      const errorTextStart = `<text.*?class=".*?error-text.*?".*?>`;
+      const errorTextEnd = `</text>`;
+      const errorTextRegEx = new RegExp(`${errorTextStart}(.|\\n)*?${errorTextEnd}`);
+      const errorBlock = output.match(errorTextRegEx)[0];
+      const error = new Error(errorBlock
+        .replace(new RegExp(errorTextStart), "")
+        .replace(new RegExp(errorTextEnd), "")
+        .trim());
+      error.output = output;
+      throw error;
+    }
 
     return output;
   })();

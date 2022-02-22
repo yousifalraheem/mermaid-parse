@@ -21,10 +21,11 @@ describe("Mermaid parser", () => {
 
   it("Should return a valid SVG with error message for incorrect definition", async () => {
     const definition = `foo`;
-
-    const result = await mermaidParse(definition);
-
-    expect(result.startsWith("<div")).toBeTruthy();
-    expect(result).toContain("Syntax error in graph<");
+    try {
+      await mermaidParse(definition);
+    } catch (e) {
+      expect(e.message).toEqual("Syntax error in graph");
+      expect(e.hasOwnProperty('output')).toBeTruthy();
+    }
   });
 });
