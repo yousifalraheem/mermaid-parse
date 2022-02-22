@@ -50,6 +50,7 @@ const parseMMD = /*#__PURE__*/function () {
     });
     yield page.goto(`file://${path.join(__dirname, "index.html")}`);
     yield page.evaluate(`document.body.style.background = 'white'`);
+    /* istanbul ignore next */
     yield page.$eval("#container", (container, definition) => {
       container.textContent = definition;
       window.mermaid.initialize({theme: "default"});
@@ -66,6 +67,7 @@ const parseMMD = /*#__PURE__*/function () {
       }
     }, definition);
 
+    /* istanbul ignore next */
     const svg = yield page.$eval("#container", (container) => {
       let _container$getElement, _container$getElement2;
 
