@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "commit": "git-cz",
+    "prepare": "husky install",
     "release": "semantic-release",
-    "test": "jest",
-    "prepare": "husky install"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,7 @@
 ![https://img.shields.io/github/languages/top/yousifalraheem/mermaid-parse](https://img.shields.io/github/languages/top/yousifalraheem/mermaid-parse)
 ![https://img.shields.io/npm/l/mermaid-parse](https://img.shields.io/npm/l/mermaid-parse)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/mermaid-parse)
+[![codecov](https://codecov.io/gh/yousifalraheem/mermaid-parse/branch/main/graph/badge.svg)](https://codecov.io/gh/yousifalraheem/mermaid-parse)
 
 # mermaid-parse
 Parses Mermaid definitions into mermaid svg diagram
