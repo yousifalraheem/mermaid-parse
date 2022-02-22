@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/yousifalraheem/mermaid-parse#readme",
   "dependencies": {
-    "mermaid": "^8.14.0",
     "puppeteer": "^13.3.2"
   },
   "devDependencies": {
@@ -51,8 +50,14 @@
     "defaultBranch": "main",
     "branches": [
       "main",
-      { "name": "beta", "prerelease": true },
-      { "name": "alpha", "prerelease": true }
+      {
+        "name": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "alpha",
+        "prerelease": true
+      }
     ]
   }
 }
