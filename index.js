@@ -87,7 +87,7 @@ const parseMMD = /*#__PURE__*/function () {
         };
       }
     }, definition, config);
-    let extension = config?.extension || "svg";
+    let extension = (config && config.extension) || "svg";
 
     switch (extension) {
       case "png":

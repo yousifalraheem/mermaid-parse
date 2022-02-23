@@ -8,4 +8,4 @@ export interface MermaidParseConfig {
  * @param {MermaidParseConfig} config configurations
  * @returns {Promise<string>} The Mermaid diagram in HTML string format
  */
-export default function mermaidParse(definition: string, config: MermaidParseConfig): Promise<string>;
+export default function mermaidParse(definition: string, config?: MermaidParseConfig): Promise<string>;
