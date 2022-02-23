@@ -62,7 +62,7 @@ function _asyncToGenerator(fn) {
 }
 
 const parseMMD = /*#__PURE__*/function () {
-  const ref2 = _asyncToGenerator(function* (browser, definition) {
+  const ref2 = _asyncToGenerator(function* (browser, definition, config) {
     const page = yield browser.newPage();
     page.setViewport({
       width: 800, height: 600, deviceScaleFactor: 1
@@ -74,7 +74,7 @@ const parseMMD = /*#__PURE__*/function () {
     /* istanbul ignore next */
     yield page.$eval("#container", (container, definition) => {
       container.textContent = definition;
-      window.mermaid.initialize({theme: "default"});
+      window.mermaid.initialize({ theme: "default" });
 
       try {
         window.mermaid.init(undefined, container);
@@ -86,23 +86,54 @@ const parseMMD = /*#__PURE__*/function () {
           status: "error", error, message: error.message
         };
       }
-    }, definition);
+    }, definition, config);
+    let extension = config?.extension || "svg";
 
-    /* istanbul ignore next */
-    const svg = yield page.$eval("#container", (container) => {
-      let _container$getElement, _container$getElement2;
+    switch (extension) {
+      case "png":
+        /* istanbul ignore next */
+        const clip = yield page.$eval("svg", svg => {
+          const react = svg.getBoundingClientRect();
+          return {
+            x: Math.floor(react.left),
+            y: Math.floor(react.top),
+            width: Math.ceil(react.width),
+            height: Math.ceil(react.height)
+          };
+        });
+        yield page.setViewport({
+          width: clip.x + clip.width,
+          height: clip.y + clip.height,
+          deviceScaleFactor: 1
+        });
+        /**
+         * @type {Buffer} buffer
+         */
+        const buffer = yield page.screenshot({
+          clip,
+          omitBackground: true
+        });
+        return buffer;
+      case "svg":
+        /* istanbul ignore next */
+        const svg = yield page.$eval("#container", (container) => {
+          let _container$getElement, _container$getElement2;
 
-      const svg = (_container$getElement = container.getElementsByTagName) === null || _container$getElement === void 0 ? void 0 : (_container$getElement2 = _container$getElement.call(container, "svg")) === null || _container$getElement2 === void 0 ? void 0 : _container$getElement2[0];
+          const svg = (_container$getElement = container.getElementsByTagName) === null || _container$getElement === void 0 ? void 0 : (_container$getElement2 = _container$getElement.call(container, "svg")) === null || _container$getElement2 === void 0 ? void 0 : _container$getElement2[0];
 
-      if (svg.style) {
-        svg.style.backgroundColor = "transparent";
-      }
+          if (svg.style) {
+            svg.style.backgroundColor = "transparent";
+          }
 
-      return container.innerHTML;
-    });
-    const svg_xml = svg.replace(/<br>/gi, "<br/>");
+          return container.innerHTML;
+        });
+        const svg_xml = svg.replace(/<br>/gi, "<br/>");
 
-    return svg_xml;
+        return svg_xml;
+      default:
+        throw new Error(`Unsupported extension: ${extension}`);
+        break;
+    }
   });
 
   return function parseMMD(_x2, _x3, _x4) {
@@ -110,22 +141,17 @@ const parseMMD = /*#__PURE__*/function () {
   };
 }();
 
-/**
- * Parses Mermaid definition to SVG diagram
- * @param {string} definition
- * @return Promise<string>
- */
-module.exports = function (definition) {
+function mermaidParse(definition, config) {
   return _asyncToGenerator(function* () {
     const browser = yield puppeteer.launch();
 
     /**
      * @type {string}
      */
-    const output = yield parseMMD(browser, decodeHTMLEntities(definition));
+    const output = yield parseMMD(browser, decodeHTMLEntities(definition), config);
     yield browser.close();
 
-    if (output.trim().startsWith("<div id=\"dmermaid-")) {
+    if (typeof output === "string" && output.trim().startsWith("<div id=\"dmermaid-")) {
       const errorTextStart = `<text.*?class=".*?error-text.*?".*?>`;
       const errorTextEnd = `</text>`;
       const errorTextRegEx = new RegExp(`${errorTextStart}(.|\\n)*?${errorTextEnd}`);
@@ -141,3 +167,6 @@ module.exports = function (definition) {
     return output;
   })();
 }
+
+module.exports = mermaidParse;
+module.exports.mermaidParse = mermaidParse
