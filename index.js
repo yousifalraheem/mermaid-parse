@@ -10,7 +10,7 @@ const puppeteer = require("puppeteer");
  * @returns {string} The decoded string
  */
 function decodeHTMLEntities(encodedString) {
-  const translate_regex = /&(nbsp|amp|quot|lt|qt);/g;
+  const translate_regex = /&(nbsp|amp|quot|lt|gt);/g;
   const translate_map = {
     nbsp: " ",
     amp: "&",
@@ -19,8 +19,8 @@ function decodeHTMLEntities(encodedString) {
     gt: ">",
   };
   return encodedString
-    .replace(translate_regex, (_, entity) => translate_map[entity])
-    .replace(/&#(\d+);/gi, (_, charCode) =>
+    .replace(translate_regex, (_, entity) => translate_map[entity] || entity)
+    .replace(/&#(\w+);/gi, (_, charCode) =>
       String.fromCharCode(parseInt(charCode))
     )
 }
@@ -70,7 +70,7 @@ const parseMMD = /*#__PURE__*/function () {
       throw new Error(e);
     });
     yield page.goto(`file://${path.join(__dirname, "index.html")}`);
-    yield page.evaluate(`document.body.style.background = 'white'`);
+    yield page.evaluate(`document.body.style.background = 'transparent'`);
     /* istanbul ignore next */
     yield page.$eval("#container", (container, definition) => {
       container.textContent = definition;
@@ -95,7 +95,7 @@ const parseMMD = /*#__PURE__*/function () {
       const svg = (_container$getElement = container.getElementsByTagName) === null || _container$getElement === void 0 ? void 0 : (_container$getElement2 = _container$getElement.call(container, "svg")) === null || _container$getElement2 === void 0 ? void 0 : _container$getElement2[0];
 
       if (svg.style) {
-        svg.style.backgroundColor = "white";
+        svg.style.backgroundColor = "transparent";
       }
 
       return container.innerHTML;
