@@ -141,7 +141,7 @@ const parseMMD = /*#__PURE__*/function () {
   };
 }();
 
-function mermaidParse(definition, config) {
+module.exports = function mermaidParse(definition, config) {
   return _asyncToGenerator(function* () {
     const browser = yield puppeteer.launch();
 
@@ -167,6 +167,3 @@ function mermaidParse(definition, config) {
     return output;
   })();
 }
-
-module.exports = mermaidParse;
-module.exports.mermaidParse = mermaidParse

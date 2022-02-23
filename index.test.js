@@ -1,4 +1,4 @@
-const { mermaidParse } = require("./index");
+const mermaidParse = require("./index");
 
 describe("Mermaid parser", () => {
   const definition = `

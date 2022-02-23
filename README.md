@@ -27,7 +27,7 @@ yarn add mermaid-parse
 ## Usage
 
 ```js
-import { mermaidParse } from 'mermaid-parse';
+import mermaidParse from 'mermaid-parse';
 
 const definition = `
     graph TD
