@@ -106,14 +106,13 @@ const parseMMD = /*#__PURE__*/function () {
           height: clip.y + clip.height,
           deviceScaleFactor: 1
         });
-        /**
-         * @type {Buffer} buffer
-         */
+        /** @type {Buffer} buffer */
         const buffer = yield page.screenshot({
           clip,
           omitBackground: true
         });
-        return buffer;
+        const base64Url = Buffer.from(buffer).toString("base64");
+        return `<img style="max-width: 100%" alt="Diagram" src="data:image/png;base64,${base64Url}" />`;
       case "svg":
         /* istanbul ignore next */
         const svg = yield page.$eval("#container", (container) => {
@@ -145,9 +144,7 @@ module.exports = function mermaidParse(definition, config) {
   return _asyncToGenerator(function* () {
     const browser = yield puppeteer.launch();
 
-    /**
-     * @type {string}
-     */
+    /** @type {string} */
     const output = yield parseMMD(browser, decodeHTMLEntities(definition), config);
     yield browser.close();
 

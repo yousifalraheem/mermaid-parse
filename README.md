@@ -38,22 +38,22 @@ const definition = `
     C -->|Three| F
 `;
 
-mermaidParse(definition).then(doSomething);
+mermaidParse(definition, { extension: 'png' }).then(htmlRes => {
+    res.send(htmlRes);
+});
 ```
 
 ### Configuration
 
 Currently supported configurations:
 
-| option     | type      | description          | default |
-|------------|-----------|----------------------|---------|
-| extension? | `svg,png` | The output extension | `svg`   |
-
-Note 💡: By selecting type `png` the returned value type is `Buffer`.
+| option     | type                   | description          | default |
+|------------|------------------------|----------------------|---------|
+| extension? | `"svg"` &#124; `"png"` | The output extension | `svg`   |
 
 ## Documentation
 
-This package uses Mermaid-js to transform the definition to svg diagram in string format.
+This package uses Mermaid-js to transform the definition to svg diagram in HTML string format.
 
 If you want to know how the definition is composed please
 read [mermaid-js documentation](https://mermaid-js.github.io/mermaid/#/).

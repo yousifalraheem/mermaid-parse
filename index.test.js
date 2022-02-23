@@ -33,14 +33,13 @@ describe("Mermaid parser", () => {
     test("SVG", async () => {
       const result = await mermaidParse(definition, { extension: "svg" });
 
-      expect(typeof result === "string").toBeTruthy();
       expect(result.startsWith("<svg")).toBeTruthy();
     });
 
     test("PNG", async () => {
       const result = await mermaidParse(definition, { extension: "png" });
 
-      expect(Buffer.isBuffer(result)).toBeTruthy();
+      expect(result.startsWith("<img")).toBeTruthy();
     });
   })
 });
