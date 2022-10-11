@@ -14,10 +14,10 @@ describe("Mermaid parser", () => {
     const result = await mermaidParse(definition);
 
     // A valid SVG with ID starting with "mermaid"
-    expect(result.startsWith("<svg id=\"mermaid")).toBeTruthy();
+    expect(result.startsWith('<svg id="mermaid')).toBeTruthy();
     // Test for some keywords in the definition
     expect(result).toMatch(/(?=.*?\biPhone)(?=.*?\bLaptop).*/gm);
-  });
+  }, 120000);
 
   it("Should return a valid SVG with error message for incorrect definition", async () => {
     const definition2 = `foo`;
@@ -27,19 +27,19 @@ describe("Mermaid parser", () => {
       expect(e.message).toEqual("Syntax error in graph");
       expect(e.hasOwnProperty("output")).toBeTruthy();
     }
-  });
+  }, 120000);
 
   describe("Should support both svg and png outputs", () => {
     test("SVG", async () => {
       const result = await mermaidParse(definition, { extension: "svg" });
 
       expect(result.startsWith("<svg")).toBeTruthy();
-    });
+    }, 120000);
 
     test("PNG", async () => {
       const result = await mermaidParse(definition, { extension: "png" });
 
       expect(result.startsWith("<img")).toBeTruthy();
-    });
-  })
+    }, 120000);
+  });
 });
