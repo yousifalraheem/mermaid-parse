@@ -1,5 +1,4 @@
-import { LaunchOptions } from "puppeteer";
-
+type LaunchOptions = import('puppeteer').LaunchOptions
 export interface MermaidParseConfig {
   extension?: "svg" | "png";
 }
@@ -10,6 +9,7 @@ export interface MermaidParseConfig {
  * @param {LaunchOptions} puppeteerConfing Puppeteer launch options
  * @returns {Promise<string>} The Mermaid diagram in HTML string format
  */
+
 export default function mermaidParse(
   definition: string,
   config?: MermaidParseConfig,
