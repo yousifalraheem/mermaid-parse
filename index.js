@@ -140,10 +140,9 @@ const parseMMD = /*#__PURE__*/function () {
   };
 }();
 
-module.exports = function mermaidParse(definition, config) {
+module.exports = function mermaidParse(definition, config, puppeteerConfig = undefined) {
   return _asyncToGenerator(function* () {
-    const browser = yield puppeteer.launch();
-
+    const browser = yield puppeteer.launch(puppeteerConfig);
     /** @type {string} */
     const output = yield parseMMD(browser, decodeHTMLEntities(definition), config);
     yield browser.close();

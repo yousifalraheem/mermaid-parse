@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/yousifalraheem/mermaid-parse#readme",
   "dependencies": {
+    "@types/puppeteer": "^5.4.6",
     "puppeteer": "^13.3.2"
   },
   "devDependencies": {
